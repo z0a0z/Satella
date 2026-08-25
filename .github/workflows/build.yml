@@ -13,22 +13,15 @@ jobs:
     - name: Checkout Repo
       uses: actions/checkout@v4
 
-    - name: Install Homebrew Dependencies
+    - name: Clean and Install Theos and SDKs
       run: |
-        brew install ldid xz
-
-    - name: Setup Theos System
-      run: |
-        export THEOS_DIR=$GITHUB_WORKSPACE/theos
-        rm -rf $THEOS_DIR
-        
-        # تحميل الأداة والـ SDKs بشكل رسمي ومباشر
-        bash -c "$(curl -fsSL https://githubusercontent.com)"
-        git clone --depth=1 https://github.com $THEOS_DIR/sdks
+        rm -rf $HOME/theos-system
+        git clone --recursive https://github.com/theos/theos.git $HOME/theos-system
+        git clone --depth=1 https://github.com $HOME/theos-system/sdks
 
     - name: Compile Package
       run: |
-        export THEOS=$GITHUB_WORKSPACE/theos
+        export THEOS=$HOME/theos-system
         make package FINALPACKAGE=1 THEOS_PACKAGE_SCHEME=rootless
 
     - name: Upload Artifact
