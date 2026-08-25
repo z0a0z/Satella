@@ -15,15 +15,13 @@ jobs:
 
     - name: Clean and Install Theos and SDKs
       run: |
-        rm -rf $GITHUB_WORKSPACE/theos
-        git clone --recursive https://github.com $GITHUB_WORKSPACE/theos
-        git clone --depth=1 https://github.com $GITHUB_WORKSPACE/theos/sdks
+        rm -rf theos
+        git clone --recursive https://github.com theos
+        git clone --depth=1 https://github.com theos/sdks
 
     - name: Compile Package
-      env:
-        THEOS: ${{ github.workspace }}/theos
-        THEOS_PACKAGE_SCHEME: rootless
       run: |
+        export THEOS=$GITHUB_WORKSPACE/theos
         make package FINALPACKAGE=1 THEOS_PACKAGE_SCHEME=rootless
 
     - name: Upload Artifact
