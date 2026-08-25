@@ -16,12 +16,12 @@ jobs:
     - name: Setup Theos System
       run: |
         brew install ldid xz
-        git clone --recursive "https://github.com" $HOME/theos
-        git clone --depth=1 "https://github.com" $HOME/theos/sdks
+        git clone --recursive https://github.com ${{ github.workspace }}/theos
+        git clone --depth=1 https://github.com ${{ github.workspace }}/theos/sdks
 
     - name: Compile Package
       run: |
-        export THEOS=$HOME/theos
+        export THEOS=${{ github.workspace }}/theos
         make package FINALPACKAGE=1 THEOS_PACKAGE_SCHEME=rootless TARGET=iphone:clang:latest:14.0
         
     - name: Upload Artifact
