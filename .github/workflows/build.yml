@@ -8,12 +8,12 @@ jobs:
     runs-on: macos-14
     steps:
     - uses: actions/checkout@v4
-    - name: Setup & Build
+    - name: Run Build
       run: |
         brew install ldid xz
-        git clone --recursive https://github.com $GITHUB_WORKSPACE/theos
-        git clone --depth=1 https://github.com $GITHUB_WORKSPACE/theos/sdks
-        export THEOS=$GITHUB_WORKSPACE/theos
+        git clone --recursive https://github.com ${{ github.workspace }}/theos
+        git clone --depth=1 https://github.com ${{ github.workspace }}/theos/sdks
+        export THEOS=${{ github.workspace }}/theos
         make package FINALPACKAGE=1 THEOS_PACKAGE_SCHEME=rootless TARGET=iphone:clang:latest:14.0
     - uses: actions/upload-artifact@v4
       with:
