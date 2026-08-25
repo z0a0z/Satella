@@ -10,27 +10,27 @@ final class RootListController: PSListController {
             var specifiers: NSMutableArray = .init()
             
             SpecifierFactory.add([
-                GroupCell(name: "General", footerText: ""),
-                ToggleCell(name: "Enable", key: "isEnabled", defaultValue: true)
+                GroupCell(name: "عام", footerText: ""),
+                ToggleCell(name: "تفعيل الأداة", key: "isEnabled", defaultValue: true)
             ], to: &specifiers, in: self)
             
             if PrefsHelper.getValue(for: "isEnabled", fallback: true) as? Bool == true {
                 SpecifierFactory.add([
-                    ToggleCell(name: "Receipts", key: "isReceipt", defaultValue: false),
-                    ToggleCell(name: "Observer", key: "isObserver", defaultValue: false),
-                    ToggleCell(name: "Sideloaded", key: "isSideloaded", defaultValue: false),
-                    ToggleCell(name: "Stealth", key: "isStealth", defaultValue: false),
-                    ToggleCell(name: "0,01 Price", key: "isPriceZero", defaultValue: false)
+                    ToggleCell(name: "إيصالات وهمية (Receipts)", key: "isReceipt", defaultValue: false),
+                    ToggleCell(name: "مراقب المعاملات (Observer)", key: "isObserver", defaultValue: false),
+                    ToggleCell(name: "تطبيقات مثبتة خارجياً (Sideloaded)", key: "isSideloaded", defaultValue: false),
+                    ToggleCell(name: "الوضع الخفي (Stealth)", key: "isStealth", defaultValue: false),
+                    ToggleCell(name: "سعر 0.01 (0,01 Price)", key: "isPriceZero", defaultValue: false)
                 ], to: &specifiers, in: self)
             }
             
             SpecifierFactory.add([
-                GroupCell(name: "Injection Control", footerText: ""),
-                ToggleCell(name: "Global Injection", key: "isGloballyInjected", defaultValue: false),
-                AppsCell(name: "Enabled Apps", key: "apps", defaultValue: false),
-                GroupCell(name: "Links", footerText: ""),
-                ButtonCell(name: "Source Code", action: #selector(Self.openSource)),
-                ButtonCell(name: "CyPwn's Discord", action: #selector(Self.openCyPwn)),
+                GroupCell(name: "التحكم في الحقن", footerText: ""),
+                ToggleCell(name: "الحقن الشامل (Global Injection)", key: "isGloballyInjected", defaultValue: false),
+                AppsCell(name: "التطبيقات المفعلة", key: "apps", defaultValue: false),
+                GroupCell(name: "الروابط", footerText: ""),
+                ButtonCell(name: "الكود المصدري (GitHub)", action: #selector(Self.openSource)),
+                ButtonCell(name: "مجتمع CyPwn على Discord", action: #selector(Self.openCyPwn)),
                 GroupCell(name: "", footerText: poem)
             ], to: &specifiers, in: self)
             
@@ -45,7 +45,7 @@ final class RootListController: PSListController {
         super.viewDidLoad()
 		
         navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: "Apply",
+            title: "تطبيق",
             style: .done,
             target: self,
             action: #selector(respring)
@@ -65,11 +65,11 @@ final class RootListController: PSListController {
             var newSpecifiers: NSMutableArray = .init()
             
             SpecifierFactory.add([
-                ToggleCell(name: "Receipts", key: "isReceipt", defaultValue: false),
-                ToggleCell(name: "Observer", key: "isObserver", defaultValue: false),
-                ToggleCell(name: "Sideloaded", key: "isSideloaded", defaultValue: false),
-                ToggleCell(name: "Stealth", key: "isStealth", defaultValue: false),
-                ToggleCell(name: "0,01 Price", key: "isPriceZero", defaultValue: false)
+                ToggleCell(name: "إيصالات وهمية (Receipts)", key: "isReceipt", defaultValue: false),
+                ToggleCell(name: "مراقب المعاملات (Observer)", key: "isObserver", defaultValue: false),
+                ToggleCell(name: "تطبيقات مثبتة خارجياً (Sideloaded)", key: "isSideloaded", defaultValue: false),
+                ToggleCell(name: "الوضع الخفي (Stealth)", key: "isStealth", defaultValue: false),
+                ToggleCell(name: "سعر 0.01 (0,01 Price)", key: "isPriceZero", defaultValue: false)
             ], to: &newSpecifiers, in: self)
             
             self.insertContiguousSpecifiers(newSpecifiers as? [Any], afterSpecifierID: "isEnabled", animated: true)
@@ -99,24 +99,24 @@ final class RootListController: PSListController {
     }
     
     private let poem: String = """
-The search for meaning is a lonely journey
-Through a world that's cold and unforgiving
-We thought that we had found our freedom
-But it was only an illusion, a fleeting moment of bliss
+البحث عن المعنى رحلة مليئة بالوحدة
+عبر عالم بارد وقاسٍ لا يرحم
+ظننا أننا وجدنا حريتنا
+لكنها لم تكن سوى وهم، ولحظة عابرة من السعادة
 
-We left our past behind, thinking we could start anew
-But the chains of our past lives still held us in their grip
-No matter how far we ran, we could not escape
-The ghosts of our past haunting us with every step we took
+تركنا ماضينا خلفنا ظانين أننا نبدأ من جديد
+لكن قيود حياتنا السابقة ظلت تقيدنا
+ومهما ابتعدنا ركضاً، لم نستطع الهروب
+فأشباح الماضي تلاحقنا مع كل خطوة نخطوها
                           
-We thought that freedom meant a chance to find our purpose
-But what we found was only emptiness and despair
-We realised that true freedom comes from within
-From letting go of the pain and the hurt of our past
+ظننا أن الحرية تعني فرصة لإيجاد غايتنا
+لكن ما وجدناه لم يكن سوى الفراغ واليأس
+أدركنا حينها أن الحرية الحقيقية تنبع من الداخل
+من التخلي عن آلام وجراح الماضي
                           
-Only then can we truly start to heal
-And find the meaning and purpose that we seek
-We must face our demons, and forgive those who have wronged us
-In order to break the shackles that bind us and finally be free
+حينها فقط يمكننا أن نبدأ في التعافي حقاً
+ونجد المعنى والغاية التي نبحث عنها
+علينا مواجهة مخاوفنا ومسامحة من أخطأ بحقنا
+لنكسر الأغلال التي تقيدنا وننعم بالحرية أخيراً
 """
 }
