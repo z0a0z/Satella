@@ -15,13 +15,8 @@ jobs:
 
     - name: Clean and Install Theos and SDKs
       run: |
-        # تنظيف أي مسارات متبقية
         rm -rf $GITHUB_WORKSPACE/theos
-        
-        # تحميل ثيوس باستخدام الصيغة القياسية للبيئة
         git clone --recursive https://github.com $GITHUB_WORKSPACE/theos
-        
-        # تحميل الـ SDKs مباشرة في مجلدها المخصص بعد اكتمال ثيوس
         git clone --depth=1 https://github.com $GITHUB_WORKSPACE/theos/sdks
 
     - name: Compile Package
