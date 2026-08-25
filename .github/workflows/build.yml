@@ -12,13 +12,17 @@ jobs:
     steps:
     - name: Checkout Repo
       uses: actions/checkout@v4
-      with:
-        submodules: recursive
 
-    - name: Install Theos and SDKs
+    - name: Clean and Install Theos and SDKs
       run: |
-        git clone --recursive https://github.com/theos/theos.git ${{ github.workspace }}/theos
-        git clone --depth=1 https://github.com/theos/sdks.git ${{ github.workspace }}/theos/sdks
+        # حذف أي بقايا مجلدات قديمة لمنع التعارض 128
+        rm -rf ${{ github.workspace }}/theos
+        
+        # تحميل أداة ثيوس بشكل نظيف وكامل
+        git clone --recursive https://github.com ${{ github.workspace }}/theos
+        
+        # تحميل الـ SDKs داخل المجلد الصحيح بعد تحميل ثيوس
+        git clone --depth=1 https://github.com ${{ github.workspace }}/theos/sdks
 
     - name: Compile Package
       env:
