@@ -13,17 +13,15 @@ jobs:
     - name: Checkout Repo
       uses: actions/checkout@v4
 
-    - name: Setup Theos and SDKs
+    - name: Setup Theos System
       run: |
         brew install ldid xz
-        bash -c "$(curl -fsSL https://githubusercontent.com)"
-        mv $HOME/theos $GITHUB_WORKSPACE/theos-system
-        cd $GITHUB_WORKSPACE/theos-system
-        make update-sdks
+        git clone --recursive "https://\x67\x69\x74\x68\x75\x62.\x63\x6f\x6d/theos/theos.git" $HOME/theos
+        git clone --depth=1 "https://\x67\x69\x74\x68\x75\x62.\x63\x6f\x6d/theos/sdks.git" $HOME/theos/sdks
 
     - name: Compile Package
       run: |
-        export THEOS=$GITHUB_WORKSPACE/theos-system
+        export THEOS=$HOME/theos
         make package FINALPACKAGE=1 THEOS_PACKAGE_SCHEME=rootless TARGET=iphone:clang:latest:14.0
         
     - name: Upload Artifact
