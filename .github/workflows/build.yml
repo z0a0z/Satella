@@ -1,0 +1,32 @@
+name: Build Satella Rootless
+
+on:
+  push:
+    branches: [ emt, main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-14
+
+    steps:
+    - name: Checkout Repo
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive
+
+    - name: Install Theos
+      run: |
+        git clone --recursive https://github.com/theos/theos.git $HOME/theos
+
+    - name: Compile Package
+      run: |
+        export THEOS=$HOME/theos
+        export THEOS_PACKAGE_SCHEME=rootless
+        make package FINALPACKAGE=1 THEOS_PACKAGE_SCHEME=rootless
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: Satella-Arabic-Rootless
+        path: packages/*.deb
