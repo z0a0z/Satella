@@ -15,10 +15,10 @@ jobs:
 
     - name: Setup Theos and SDKs
       run: |
-        set -e
         brew install ldid xz
         git clone --recursive https://github.com $GITHUB_WORKSPACE/theos-system
-        git clone --depth=1 https://github.com $GITHUB_WORKSPACE/theos-system/sdks
+        cd $GITHUB_WORKSPACE/theos-system
+        make update-sdks
 
     - name: Compile Package
       run: |
