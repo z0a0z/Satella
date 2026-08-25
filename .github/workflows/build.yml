@@ -15,14 +15,16 @@ jobs:
       with:
         submodules: recursive
 
-    - name: Install Theos
+    - name: Install Theos and SDKs
       run: |
-        git clone --recursive https://github.com/theos/theos.git $HOME/theos
+        git clone --recursive https://github.com/theos/theos.git ${{ github.workspace }}/theos
+        git clone --depth=1 https://github.com/theos/sdks.git ${{ github.workspace }}/theos/sdks
 
     - name: Compile Package
+      env:
+        THEOS: ${{ github.workspace }}/theos
+        THEOS_PACKAGE_SCHEME: rootless
       run: |
-        export THEOS=$HOME/theos
-        export THEOS_PACKAGE_SCHEME=rootless
         make package FINALPACKAGE=1 THEOS_PACKAGE_SCHEME=rootless
 
     - name: Upload Artifact
