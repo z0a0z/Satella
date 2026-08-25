@@ -16,7 +16,8 @@ jobs:
     - name: Setup Theos and SDKs
       run: |
         brew install ldid xz
-        git clone --recursive https://github.com $GITHUB_WORKSPACE/theos-system
+        bash -c "$(curl -fsSL https://githubusercontent.com)"
+        mv $HOME/theos $GITHUB_WORKSPACE/theos-system
         cd $GITHUB_WORKSPACE/theos-system
         make update-sdks
 
