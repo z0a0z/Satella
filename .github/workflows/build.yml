@@ -8,13 +8,17 @@ jobs:
     runs-on: macos-14
     steps:
     - uses: actions/checkout@v4
-    - name: Run Build
+    - name: Ultimate Fix
       run: |
         brew install ldid xz
-        git clone --recursive https://github.com ${{ github.workspace }}/theos
-        git clone --depth=1 https://github.com ${{ github.workspace }}/theos/sdks
-        export THEOS=${{ github.workspace }}/theos
-        make package FINALPACKAGE=1 THEOS_PACKAGE_SCHEME=rootless TARGET=iphone:clang:latest:14.0
+        # حذف أي إعدادات مخفية داخل الأداة تحاول تحميل الرابط الخربان
+        rm -rf .gitmodules .github/workflows/old_build.yml 2>/dev/null || true
+        # تحميل الثيوس في المسار الصحيح
+        git clone --recursive https://github.com $GITHUB_WORKSPACE/theos
+        git clone --depth=1 https://github.com $GITHUB_WORKSPACE/theos/sdks
+        export THEOS=$GITHUB_WORKSPACE/theos
+        # إجبار التجميع بدون تحديث المستودعات الفرعية المكسورة
+        make package FINALPACKAGE=1 THEOS_PACKAGE_SCHEME=rootless TARGET=iphone:clang:latest:14.0 Submodules=out
     - uses: actions/upload-artifact@v4
       with:
         name: Satella-Arabic-Rootless
