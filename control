@@ -1,12 +1,9 @@
 Package: emt.paisseon.satella
-Name: Satella (معربة)
+Name: Satella-Arabic
 Version: 1.8.1
 Architecture: iphoneos-arm64
-Description: أداة حديثة ومطورة لتجاوز وتزييف الشراء داخل التطبيقات.
+Description: Modern in-app purchase cracker Arabic Version.
 Maintainer: Lilliana
 Author: Lilliana
 Section: Tweaks
 Depends: mobilesubstrate, firmware (>= 12.2), preferenceloader, com.opa334.altlist
-SileoDepiction: https://github.io
-Depiction: https://pinpal.github.io/Sileo-Depiction-WebViews/?json=https://github.io&name=Satella&dev=Lilliana
-Icon: https://github.io
