@@ -13,21 +13,11 @@ jobs:
     - name: Checkout Repo
       uses: actions/checkout@v4
 
-    - name: Install System Utilities
-      run: |
-        brew install ldid xz
-
-    - name: Force Clean Setup of Theos
-      run: |
-        mkdir -p $HOME/theos-build
-        cd $HOME/theos-build
-        git clone --recursive "https://github.com/theos/theos.git" theos
-        git clone --depth=1 "https://github.com" theos/sdks
-
+    - name: Setup Theos Environment
+      uses: answersandcode/setup-theos@v1.1
 
     - name: Compile Package
       run: |
-        export THEOS=$HOME/theos-build/theos
         make package FINALPACKAGE=1 THEOS_PACKAGE_SCHEME=rootless TARGET=iphone:clang:latest:14.0
         
     - name: Upload Artifact
